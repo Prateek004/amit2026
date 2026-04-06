@@ -11,11 +11,19 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 export async function signUp(username: string, password: string, businessName: string) {
-  const email = `${username}@hissabwala.local`;
+  // Convert username to valid email format
+  const sanitizedUsername = username.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const email = `${sanitizedUsername}@hissabwala.local`;
   
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: undefined,
+      data: {
+        username: username,
+      }
+    }
   });
 
   if (authError) throw authError;
@@ -46,7 +54,9 @@ export async function signUp(username: string, password: string, businessName: s
 }
 
 export async function signIn(username: string, password: string) {
-  const email = `${username}@hissabwala.local`;
+  // Use the same email format for login
+  const sanitizedUsername = username.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const email = `${sanitizedUsername}@hissabwala.local`;
   
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
