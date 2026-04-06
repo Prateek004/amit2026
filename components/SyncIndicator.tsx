@@ -19,7 +19,7 @@ export function SyncIndicator() {
     window.addEventListener('offline', updateOnlineStatus);
 
     const checkPendingSync = async () => {
-      const pending = await db.sync_queue.where('synced').equals(false).count();
+      const pending = await db.sync_queue.where({ synced: false }).count();
       setPendingCount(pending);
     };
 
@@ -45,8 +45,7 @@ export function SyncIndicator() {
     setIsSyncing(true);
     try {
       const pending = await db.sync_queue
-        .where('synced')
-        .equals(false)
+        .where({ synced: false })
         .limit(10)
         .toArray();
 
