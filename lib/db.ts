@@ -124,7 +124,7 @@ export class HissabWalaDB extends Dexie {
   customers!: Table<Customer>;
   orders!: Table<Order>;
   sync_queue!: Table<SyncQueueItem>;
-  tables!: Table<TableEntity>;
+table_entities!: Table<TableEntity>;
 
   constructor() {
     super('HissabWalaDB');
@@ -137,7 +137,7 @@ export class HissabWalaDB extends Dexie {
       customers: 'id, business_id, phone',
       orders: 'id, business_id, bill_number, created_at',
       sync_queue: 'id, business_id, synced, created_at',
-      tables: 'id, business_id, table_number',
+table_entities: 'id, business_id, table_number',
     });
   }
 }
